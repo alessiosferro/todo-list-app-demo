@@ -1,7 +1,16 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {bootstrapApplication} from "@angular/platform-browser";
+import {AppComponent} from "./app/app.component";
+import {provideHttpClient} from "@angular/common/http";
+import {InjectionToken} from "@angular/core";
 
-import { AppModule } from './app/app.module';
+export const APP_BASE_URL = new InjectionToken('This is the base url of the API endpoint');
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: APP_BASE_URL,
+      useValue: 'https://jsonplaceholder.typicode.com'
+    }
+  ]
+});
